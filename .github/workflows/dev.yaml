@@ -59,6 +59,7 @@ jobs:
           echo "VITE_WS_URL=${{ secrets.VITE_WS_URL }}" > .env
           echo "DB_URL=${{ secrets.DB_URL }}" >> .env
           echo "ClientUrl=${{ secrets.ClientUrl }}" >> .env
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
           docker compose pull
           docker compose down
           docker compose up -d
