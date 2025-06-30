@@ -29,7 +29,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-client:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/myclient:latest
 
       # Build and Push Server Image
       - name: Build and Push Server Image
@@ -38,7 +38,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-server:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/myserver:latest
 
       # Set up SSH agent
       - name: Set up SSH key

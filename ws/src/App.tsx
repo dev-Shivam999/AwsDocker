@@ -5,6 +5,7 @@ function App() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [message, setMesssage] = useState()
 
+  
   useEffect(() => {
     const newSocket = new WebSocket(import.meta.env.VITE_WS_URL);
     newSocket.onopen = () => {
