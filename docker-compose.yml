@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  client:
+    image: your-docker-username/my-client:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_WS_URL=${VITE_WS_URL}
+    depends_on:
+      - server
+
+  server:
+    image: your-docker-username/my-server:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - DB_URL=${DB_URL}
+      - ClientUrl=${ClientUrl}
+
+ 

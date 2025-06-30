@@ -1,0 +1,33 @@
+# ----------- Build Stage -----------
+FROM node:18 AS builder
+
+WORKDIR /app
+
+# Copy only what's needed to install and build
+COPY package*.json ./
+RUN npm install
+
+# Copy rest of the files
+COPY . .
+
+# Compile TypeScript
+RUN npm run build
+
+# ----------- Run Stage -----------
+FROM node:18 AS runner
+
+WORKDIR /app
+
+# Copy only built output and deps
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+
+# Set environment variable (optional)
+ENV NODE_ENV=production
+
+# Expose your app port
+EXPOSE 3000
+
+# Command to run the compiled app
+CMD ["node", "dist/index.js"]

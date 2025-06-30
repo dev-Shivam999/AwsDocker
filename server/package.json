@@ -1,0 +1,24 @@
+{
+  "name": "sockit.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
+    "@types/ws": "^8.5.12",
+    "express": "^4.21.1",
+    "ws": "^8.18.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "mongoose": "^8.16.1"
+  }
+}
