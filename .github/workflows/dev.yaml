@@ -56,7 +56,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ~/app
-
+            ls
             export VITE_WS_URL=${{ secrets.VITE_WS_URL }}
             export DB_URL=${{ secrets.DB_URL }}
             export ClientUrl=${{ secrets.ClientUrl }}
