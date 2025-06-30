@@ -52,16 +52,16 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "mkdir -p ~/app"
           scp docker-compose.yml ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/app/docker-compose.yml
 
-      - name: Run docker-compose on server with env vars
+      - name: Run env vars
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ~/app
-            
-            export VITE_WS_URL=${{ secrets.VITE_WS_URL }}
-            export DB_URL=${{ secrets.DB_URL }}
-            export ClientUrl=${{ secrets.ClientUrl }}
+         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+          cd ~/app
+          echo "VITE_WS_URL=${{ secrets.VITE_WS_URL }}" > .env
+          echo "DB_URL=${{ secrets.DB_URL }}" >> .env
+          echo "ClientUrl=${{ secrets.ClientUrl }}" >> .env
+          docker compose pull
+          docker compose down
+          docker compose up -d
+         EOF
 
-            docker compose pull
-            docker compose down
-            docke compose up -d
-          EOF
+      
