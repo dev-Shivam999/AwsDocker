@@ -13,7 +13,7 @@ services:
   server:
     image: ${DOCKER_USERNAME}/myserver:latest
     ports:
-      - "3001:3000"
+      - "3001:3001"
     environment:
       - DB_URL=${DB_URL}
       - ClientUrl=${ClientUrl}

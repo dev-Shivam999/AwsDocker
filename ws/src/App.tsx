@@ -7,7 +7,7 @@ function App() {
 
   
   useEffect(() => {
-    const newSocket = new WebSocket(import.meta.env.VITE_WS_URL);
+    const newSocket = new WebSocket(`${import.meta.env.VITE_WS_URL}/api/`);
     newSocket.onopen = () => {
       console.log('Connection established');
       newSocket.send('Hello Server!');
