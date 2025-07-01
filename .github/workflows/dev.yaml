@@ -31,7 +31,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/myclient:latest
           build-args: |
-            VITE_WS_URL=${{ secrets.VITE_WS_URL }}  # 🔑 Critical!
+            VITE_WS_URL=${{ secrets.VITE_WS_URL }} 
 
       # Build and Push Server Image
       - name: Build and Push Server Image
