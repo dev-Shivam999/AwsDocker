@@ -47,7 +47,6 @@ mongoose.connect(mongoURI)
     .then(() => {
         console.log("Connected to MongoDB");
 
-        // Start the HTTP and WebSocket server only after DB connection
         server.listen(3001, () => {
             console.log("Server is running on http://localhost:3000");
         });
