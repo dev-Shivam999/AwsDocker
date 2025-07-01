@@ -7,7 +7,7 @@ function App() {
 
   
   useEffect(() => {
-    const newSocket = new WebSocket(`${import.meta.env.VITE_WS_URL}/api/`);
+    const newSocket = new WebSocket(`http://ec2-43-204-114-189.ap-south-1.compute.amazonaws.com/api/`);
     newSocket.onopen = () => {
       console.log('Connection established');
       newSocket.send('Hello Server!');
