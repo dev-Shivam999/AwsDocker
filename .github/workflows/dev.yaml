@@ -60,13 +60,13 @@ jobs:
           echo "DB_URL=${{ secrets.DB_URL }}" >> .env
           echo "ClientUrl=${{ secrets.ClientUrl }}" >> .env
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
+          docker compose pull
+          docker compose down
           docker build \
           --build-arg VITE_WS_URL=${{secrets.VITE_WS_URL}} \
           -t ${{secrets.DOCKER_USERNAME}}/myclient:latest \
           
           
-          docker compose pull
-          docker compose down
           docker compose up --build -d
          EOF
 
