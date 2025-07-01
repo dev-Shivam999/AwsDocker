@@ -7,6 +7,9 @@ function App() {
 
   
   useEffect(() => {
+    console.log(import.meta.env.VITE_WS_URL);
+    console.log(`${import.meta.env.VITE_WS_URL}/api/`);
+    
     const newSocket = new WebSocket(`${import.meta.env.VITE_WS_URL}/api/`);
     newSocket.onopen = () => {
       console.log('Connection established');
@@ -24,7 +27,7 @@ function App() {
   return (
     <>
      <div>
-     
+        {import.meta.env.VITE_WS_URL}
         <input type="text" onChange={(e)=>setdata(e.target.value)} />
         <button onClick={()=>socket?.send(data)}>magic</button>
    
