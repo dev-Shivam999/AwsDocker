@@ -3,14 +3,17 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
 RUN npm install
+
+# Set build-time variables (for Vite)
 ARG VITE_WS_URL
-ENV VITE_WS_URL=$VITE_WS_URL
+ENV VITE_WS_URL=$VITE_WS_URL 
 
+# Build the app
 COPY . .
-RUN npm run build
-
+RUN npm run build  # VITE_WS_URL is now embedded in the JS bundle
 
 # ---------- Run Stage ----------
 FROM node:18-alpine AS runner
@@ -22,6 +25,9 @@ RUN npm install -g serve
 
 # Copy built files from builder stage
 COPY --from=builder /app/dist ./dist
+
+# (Optional) Re-set the env var for runtime checks
+ENV VITE_WS_URL=$VITE_WS_URL
 
 # Expose the port `serve` will use
 EXPOSE 3000

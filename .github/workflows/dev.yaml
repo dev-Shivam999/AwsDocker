@@ -22,15 +22,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build and Push Client Image
+      # Build and Push Client Image (with --build-arg)
       - name: Build and Push Client Image
         uses: docker/build-push-action@v5
         with:
-         context: ./ws
-         file: ./ws/Dockerfile
-         push: true
-         tags: ${{ secrets.DOCKER_USERNAME }}/myclient:latest
-
+          context: ./ws
+          file: ./ws/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/myclient:latest
+          build-args: |
+            VITE_WS_URL=${{ secrets.VITE_WS_URL }}  # 🔑 Critical!
 
       # Build and Push Server Image
       - name: Build and Push Server Image
@@ -47,27 +48,16 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Copy docker-compose file to server
+      # Deploy to server
+      - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "mkdir -p ~/app"
-          scp docker-compose.yml ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/app/docker-compose.yml
-
-      - name: Run env vars
-        run: |
-         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
-          cd ~/app
-          echo "VITE_WS_URL=${{ secrets.VITE_WS_URL }}" > .env
-          echo "DB_URL=${{ secrets.DB_URL }}" >> .env
-          echo "ClientUrl=${{ secrets.ClientUrl }}" >> .env
-          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
-          docker compose pull
-          docker compose down
-          docker build \
-          --build-arg VITE_WS_URL=${{secrets.VITE_WS_URL}} \
-          -t ${{secrets.DOCKER_USERNAME}}/myclient:latest \
-          
-          
-          docker compose up --build -d
-         EOF
-
-      
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd ~/app
+            echo "VITE_WS_URL=${{ secrets.VITE_WS_URL }}" > .env
+            echo "DB_URL=${{ secrets.DB_URL }}" >> .env
+            echo "ClientUrl=${{ secrets.ClientUrl }}" >> .env
+            echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
+            docker compose pull
+            docker compose down
+            docker compose up -d --build
+          EOF
