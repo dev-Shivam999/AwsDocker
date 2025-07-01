@@ -62,7 +62,7 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
           docker compose pull
           docker compose down
-          docker compose up -d
+          docker compose up --build -d
          EOF
 
       
