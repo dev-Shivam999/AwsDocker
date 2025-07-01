@@ -10,7 +10,7 @@ function App() {
     console.log(import.meta.env.VITE_WS_URL);
     console.log(`${import.meta.env.VITE_WS_URL}/api/`);
     
-    const newSocket = new WebSocket(`${import.meta.env.VITE_WS_URL}/api/`);
+    const newSocket = new WebSocket(`/api/`);
     newSocket.onopen = () => {
       console.log('Connection established');
       newSocket.send('Hello Server!');
