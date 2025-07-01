@@ -5,6 +5,8 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
+ARG VITE_WS_URL
+ENV VITE_WS_URL=$VITE_WS_URL
 
 COPY . .
 RUN npm run build
