@@ -62,7 +62,7 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> .env
           docker build \
           --build-arg VITE_WS_URL=${{secrets.VITE_WS_URL}} \
-          -t ${DOCKER_USERNAME}/myclient:latest \
+          -t ${{secrets.DOCKER_USERNAME}}/myclient:latest \
           
           
           docker compose pull
